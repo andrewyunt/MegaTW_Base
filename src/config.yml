@@ -1,0 +1,6 @@
+# MySQL Connection Details
+database-ip: 127.0.0.1
+database-port: 3306
+database-name: MegaTW
+database-user: user
+database-pass: password

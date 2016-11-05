@@ -1,0 +1,24 @@
+name: MegaTW_Base
+main: com.andrewyunt.megatw_base.MegaTWBase
+version: 1.0
+softdepend: [MegaTW_Master,MegaTW_Slave]
+
+############################################################
+# +------------------------------------------------------+ #
+# |                       Commands                       | #
+# +------------------------------------------------------+ #
+############################################################
+commands:
+  bloodtoggle:
+    description: Toggle blood particles on or off..
+    permission: megatw.bloodtoggle
+
+############################################################
+# +------------------------------------------------------+ #
+# |                      Permissions                     | #
+# +------------------------------------------------------+ #
+############################################################
+permissions:
+   megatw.bloodtoggle:
+     description: Allows you to toggle blood particles on or off.
+     default: true
