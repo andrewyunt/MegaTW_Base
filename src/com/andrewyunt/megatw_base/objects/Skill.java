@@ -22,6 +22,7 @@ package com.andrewyunt.megatw_base.objects;
  */
 public enum Skill implements Upgradable {
 	
+	// Normal skills
 	RESIST("Resist"),
 	SWIFTNESS("Swiftness"),
 	BOOMERANG("Boomerang"),
@@ -33,7 +34,16 @@ public enum Skill implements Upgradable {
 	WEAKENING_SWING("Weakening Swing"),
 	SWIFT_BACKUP("Swift Backup"),
 	SOUL_SUCKER("Soul Sucker"),
-	UNDEAD("Undead");
+	UNDEAD("Undead"),
+	
+	// Gathering talents
+	HASTE("Haste"),
+	FORTUNE("Fortune"),
+	TNT("TNT"),
+	TREASURE_HUNTER("Treasure Hunter"),
+	FURNACE("Furnace"),
+	SALVAGING("Salvaging");
+
 	
 	final String name;
 	

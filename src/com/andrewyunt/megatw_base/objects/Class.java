@@ -15,24 +15,8 @@
  */
 package com.andrewyunt.megatw_base.objects;
 
-import static com.andrewyunt.megatw_base.objects.Ability.EXPLODE;
-import static com.andrewyunt.megatw_base.objects.Ability.EXPLOSIVE_ARROW;
-import static com.andrewyunt.megatw_base.objects.Ability.HEAL;
-import static com.andrewyunt.megatw_base.objects.Ability.LIGHTNING;
-import static com.andrewyunt.megatw_base.objects.Ability.TORNADO;
-import static com.andrewyunt.megatw_base.objects.Ability.WITHER_HEADS;
-import static com.andrewyunt.megatw_base.objects.Skill.BOOMERANG;
-import static com.andrewyunt.megatw_base.objects.Skill.FLURRY;
-import static com.andrewyunt.megatw_base.objects.Skill.POWERFUL_WEAKNESS;
-import static com.andrewyunt.megatw_base.objects.Skill.RECHARGE;
-import static com.andrewyunt.megatw_base.objects.Skill.RESIST;
-import static com.andrewyunt.megatw_base.objects.Skill.SOUL_SUCKER;
-import static com.andrewyunt.megatw_base.objects.Skill.SUPPORT;
-import static com.andrewyunt.megatw_base.objects.Skill.SWIFTNESS;
-import static com.andrewyunt.megatw_base.objects.Skill.SWIFT_BACKUP;
-import static com.andrewyunt.megatw_base.objects.Skill.UNDEAD;
-import static com.andrewyunt.megatw_base.objects.Skill.WEAKENING_ARROW;
-import static com.andrewyunt.megatw_base.objects.Skill.WEAKENING_SWING;
+import static com.andrewyunt.megatw_base.objects.Ability.*;
+import static com.andrewyunt.megatw_base.objects.Skill.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,26 +43,29 @@ import com.andrewyunt.megatw_base.MegaTWBase;
  */
 public enum Class implements Upgradable {
 	
-	ZOMBIE("Zombie", HEAL, RESIST, SWIFTNESS, 4, false),
-	SKELETON("Skeleton", EXPLOSIVE_ARROW, WEAKENING_ARROW, BOOMERANG, 20, false),
-	HEROBRINE("Herobrine", LIGHTNING, RECHARGE, FLURRY, 10, false),
-	CREEPER("Creeper", EXPLODE, POWERFUL_WEAKNESS, SUPPORT, 10, false),
-	SPIRIT_WARRIOR("Spirit Warrior", TORNADO, WEAKENING_SWING, SWIFT_BACKUP, 5, true),
-	WITHER_MINION("Wither Minion", WITHER_HEADS, SOUL_SUCKER, UNDEAD, 5, true);
+	ZOMBIE("Zombie", HEAL, RESIST, SWIFTNESS, HASTE, 4, false),
+	SKELETON("Skeleton", EXPLOSIVE_ARROW, WEAKENING_ARROW, BOOMERANG, FORTUNE, 20, false),
+	CREEPER("Creeper", EXPLODE, POWERFUL_WEAKNESS, SUPPORT, TNT, 10, false),
+	HEROBRINE("Herobrine", LIGHTNING, RECHARGE, FLURRY, TREASURE_HUNTER, 10, false),
+	WITHER_MINION("Wither Minion", WITHER_HEADS, SOUL_SUCKER, UNDEAD, FURNACE, 5, true),
+	SPIRIT_WARRIOR("Spirit Warrior", TORNADO, WEAKENING_SWING, SWIFT_BACKUP, SALVAGING, 5, true);
 	
 	private final String name;
 	private final Ability ability;
 	private final Skill skillOne;
 	private final Skill skillTwo;
+	private final Skill gatheringTalent;
 	private final int energyPerClick;
 	private final boolean hero;
 	
-	Class(String name, Ability ability, Skill skillOne, Skill skillTwo, int energyPerClick, boolean hero) {
+	Class(String name, Ability ability, Skill skillOne, Skill skillTwo, Skill gatheringTalent,
+			int energyPerClick, boolean hero) {
 		
 		this.name = name;
 		this.ability = ability;
 		this.skillOne = skillOne;
 		this.skillTwo = skillTwo;
+		this.gatheringTalent = gatheringTalent;
 		this.energyPerClick = energyPerClick;
 		this.hero = hero;
 	}
@@ -102,6 +89,11 @@ public enum Class implements Upgradable {
 	public Skill getSkillTwo() {
 		
 		return skillTwo;
+	}
+	
+	public Skill getGatheringTalent() {
+		
+		return gatheringTalent;
 	}
 	
 	public int getEnergyPerClick() {
