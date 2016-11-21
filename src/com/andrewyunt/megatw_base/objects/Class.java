@@ -15,13 +15,34 @@
  */
 package com.andrewyunt.megatw_base.objects;
 
-import static com.andrewyunt.megatw_base.objects.Ability.*;
-import static com.andrewyunt.megatw_base.objects.Skill.*;
+import static com.andrewyunt.megatw_base.objects.Ability.EXPLODE;
+import static com.andrewyunt.megatw_base.objects.Ability.EXPLOSIVE_ARROW;
+import static com.andrewyunt.megatw_base.objects.Ability.HEAL;
+import static com.andrewyunt.megatw_base.objects.Ability.LIGHTNING;
+import static com.andrewyunt.megatw_base.objects.Ability.TORNADO;
+import static com.andrewyunt.megatw_base.objects.Ability.WITHER_HEADS;
+import static com.andrewyunt.megatw_base.objects.Skill.BOOMERANG;
+import static com.andrewyunt.megatw_base.objects.Skill.FLURRY;
+import static com.andrewyunt.megatw_base.objects.Skill.FORTUNE;
+import static com.andrewyunt.megatw_base.objects.Skill.FURNACE;
+import static com.andrewyunt.megatw_base.objects.Skill.HASTE;
+import static com.andrewyunt.megatw_base.objects.Skill.POWERFUL_WEAKNESS;
+import static com.andrewyunt.megatw_base.objects.Skill.RECHARGE;
+import static com.andrewyunt.megatw_base.objects.Skill.RESIST;
+import static com.andrewyunt.megatw_base.objects.Skill.SALVAGING;
+import static com.andrewyunt.megatw_base.objects.Skill.SOUL_SUCKER;
+import static com.andrewyunt.megatw_base.objects.Skill.SUPPORT;
+import static com.andrewyunt.megatw_base.objects.Skill.SWIFTNESS;
+import static com.andrewyunt.megatw_base.objects.Skill.SWIFT_BACKUP;
+import static com.andrewyunt.megatw_base.objects.Skill.TNT;
+import static com.andrewyunt.megatw_base.objects.Skill.TREASURE_HUNTER;
+import static com.andrewyunt.megatw_base.objects.Skill.UNDEAD;
+import static com.andrewyunt.megatw_base.objects.Skill.WEAKENING_ARROW;
+import static com.andrewyunt.megatw_base.objects.Skill.WEAKENING_SWING;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -39,7 +60,8 @@ import com.andrewyunt.megatw_base.MegaTWBase;
  * The enumeration used for player's selected class types.
  * 
  * @author Andrew Yunt
- * @author MaccariTA
+ * @author MaccariTA |vv<-- I didn't add that
+ * @author AMOS THE G(AY)OD
  */
 public enum Class implements Upgradable {
 	
@@ -105,190 +127,12 @@ public enum Class implements Upgradable {
 		
 		return hero;
 	}
-
-	public void giveKitItems(GamePlayer player) {
+	public void giveKitItems(GamePlayer player, boolean loadFromDB) {
 
 		Player bp = player.getBukkitPlayer();
 		PlayerInventory playerInv = bp.getInventory();
 		int kitLevel = player.getLevel(this);
-
-		ItemStack helmet;
-		ItemStack chest;
-		ItemStack leggings;
-		ItemStack boots;
-
-		playerInv.setHelmet(new ItemStack(Material.IRON_HELMET, 1));
-		playerInv.setChestplate(new ItemStack(Material.IRON_CHESTPLATE, 1));
-		playerInv.setLeggings(new ItemStack(Material.IRON_LEGGINGS, 1));
-		playerInv.setBoots(new ItemStack(Material.IRON_BOOTS, 1));
-
-		if (this == ZOMBIE) {
-
-			switch (kitLevel) {
-			case 6:
-				chest = new ItemStack(Material.IRON_CHESTPLATE, 1);
-				chest.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-				playerInv.setChestplate(chest);
-				break;
-			case 7:
-				chest = new ItemStack(Material.IRON_CHESTPLATE, 1);
-				chest.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-				playerInv.setChestplate(chest);
-				break;
-			case 8:
-				chest = new ItemStack(Material.IRON_CHESTPLATE, 1);
-				chest.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
-				playerInv.setChestplate(chest);
-				break;
-			case 9:
-				chest = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
-				chest.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
-				playerInv.setChestplate(chest);
-				break;
-			default:
-				break;
-			}
-
-		} else if (this == SKELETON) {
-
-			switch (kitLevel) {
-			case 7:
-				helmet = new ItemStack(Material.IRON_HELMET);
-				helmet.addEnchantment(Enchantment.PROTECTION_PROJECTILE, 2);
-				playerInv.setHelmet(helmet);
-				break;
-			case 8:
-				helmet = new ItemStack(Material.IRON_HELMET);
-				helmet.addEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
-				playerInv.setHelmet(helmet);
-				break;
-			case 9:
-				helmet = new ItemStack(Material.DIAMOND_HELMET);
-				helmet.addEnchantment(Enchantment.PROTECTION_PROJECTILE, 4);
-				playerInv.setHelmet(helmet);
-				break;
-			default:
-				break;
-			}
-
-		} else if (this == HEROBRINE) {
-
-
-			switch (kitLevel) {
-			case 7:
-				helmet = new ItemStack(Material.IRON_HELMET);
-				helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
-				playerInv.setHelmet(helmet);
-				break;
-			case 8:
-				helmet = new ItemStack(Material.IRON_HELMET);
-				helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
-				playerInv.setHelmet(helmet);
-				break;
-			case 9:
-				helmet = new ItemStack(Material.IRON_HELMET);
-				helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
-				playerInv.setHelmet(helmet);
-				break;
-			default:
-				break;
-			}
-
-		} else if (this == CREEPER) {
-
-			switch (kitLevel) {
-			case 6:
-				leggings = new ItemStack(Material.IRON_LEGGINGS);
-				leggings.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
-				playerInv.setLeggings(leggings);
-				break;
-			case 7:
-				leggings = new ItemStack(Material.IRON_LEGGINGS);
-				leggings.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-				playerInv.setLeggings(leggings);
-				break;
-			case 8:
-				leggings = new ItemStack(Material.IRON_LEGGINGS);
-				leggings.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
-				playerInv.setLeggings(leggings);
-				break;
-			case 9:
-				leggings = new ItemStack(Material.DIAMOND_LEGGINGS);
-				leggings.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
-				leggings.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 2);
-				playerInv.setLeggings(leggings);
-				break;
-			default:
-				break;
-			}
-
-		} else if (this == SPIRIT_WARRIOR) {
-
-			switch (kitLevel) {
-			case 6:
-				boots = new ItemStack(Material.IRON_BOOTS);
-				boots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-				playerInv.setBoots(boots);
-				break;
-			case 7:
-				boots = new ItemStack(Material.IRON_BOOTS);
-				boots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
-				playerInv.setBoots(boots);
-				break;
-			case 8:
-				boots = new ItemStack(Material.IRON_BOOTS);
-				boots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
-				boots.addEnchantment(Enchantment.PROTECTION_FALL, 1);
-				playerInv.setBoots(boots);
-				break;
-			case 9:
-				boots = new ItemStack(Material.DIAMOND_BOOTS);
-				boots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
-				boots.addEnchantment(Enchantment.PROTECTION_FALL, 2);
-				playerInv.setBoots(boots);
-				break;
-			default:
-				break;
-			}
-
-		} else if (this == WITHER_MINION) {
-
-			switch (kitLevel) {
-			case 6:
-				helmet = new ItemStack(Material.IRON_HELMET);
-				helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-				playerInv.setHelmet(helmet);
-				break;
-			case 7:
-				helmet = new ItemStack(Material.IRON_HELMET);
-				helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
-				playerInv.setHelmet(helmet);
-				break;
-			case 8:
-				helmet = new ItemStack(Material.IRON_HELMET);
-				helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
-				playerInv.setHelmet(helmet);
-				break;
-			case 9:
-				helmet = new ItemStack(Material.DIAMOND_HELMET);
-				helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
-				playerInv.setHelmet(helmet);
-				break;
-			default:
-				break;
-			}
-		}
 		
-		playerInv.setContents(getKitInventoryItems(player, true).getContents());
-	}
-	
-	// Remember to change the plugin version when changing inventory items.
-	public Inventory getKitInventoryItems(GamePlayer player, boolean loadFromDB) {
-		
-		Player bp = player.getBukkitPlayer();
-		Inventory inv = Bukkit.createInventory(bp, 36);
-		int kitLevel = player.getLevel(this);
-
 		/* Health potion */
 		ItemStack potH = new ItemStack(Material.POTION, 1);
 		PotionMeta pmH = (PotionMeta) potH.getItemMeta();
@@ -316,61 +160,100 @@ public enum Class implements Upgradable {
 		potS.setItemMeta(pmS);
 		ItemStack potS2 = new ItemStack(Material.POTION, 2);
 		potS2.setItemMeta(pmS);
+		ItemStack potS3 = new ItemStack(Material.POTION, 3);
+		potS3.setItemMeta(pmS);
 		
+		/* Local variables */
 		ItemStack bow;
-
-		inv.setItem(4, new ItemStack(Material.COBBLESTONE, 32));
-		inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 4));
-
+		ItemStack sword;
+		ItemStack helmet;
+		ItemStack chestplate;
+		ItemStack leggings;
+		ItemStack boots;
+		
+		/* Clear the inventory*/
+		playerInv.clear();
+		playerInv.setHelmet(new ItemStack(Material.AIR, 1));
+		playerInv.setChestplate(new ItemStack(Material.AIR, 1));
+		playerInv.setLeggings(new ItemStack(Material.AIR, 1));
+		playerInv.setBoots(new ItemStack(Material.AIR, 1));
+		
+		/* Give items */
 		if (this == ZOMBIE) {
 
-			inv.setItem(0, new ItemStack(Material.IRON_SWORD, 1));
-			inv.setItem(1, new ItemStack(Material.IRON_PICKAXE, 1));
+			playerInv.setItem(1, new ItemStack(Material.STONE_PICKAXE));
+
 			switch (kitLevel) {
 			case 1:
-				break;
+				playerInv.setItem(0, new ItemStack(Material.WOOD_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 2));
+				playerInv.setItem(102, new ItemStack(Material.CHAINMAIL_CHESTPLATE));
 			case 2:
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 48));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 8));
-				break;
+				playerInv.setItem(0, new ItemStack(Material.WOOD_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 2));
+			    chestplate = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
+			    chestplate.addEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+			    playerInv.setItem(102, chestplate);				
+			    break;
 			case 3:
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				playerInv.setItem(0, new ItemStack(Material.WOOD_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 2));
+			    chestplate = new ItemStack(Material.IRON_CHESTPLATE);
+			    chestplate.addEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+			    playerInv.setItem(102, chestplate);	
 				break;
 			case 4:
-				inv.setItem(3, potH);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				playerInv.setItem(0, new ItemStack(Material.WOOD_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 2));
+			    chestplate = new ItemStack(Material.IRON_CHESTPLATE);
+			    chestplate.addEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+			    playerInv.setItem(102, chestplate);	
+				playerInv.setItem(3, potH);
 				break;
 			case 5:
-				inv.setItem(2, potS);
-				inv.setItem(3, potH);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				playerInv.setItem(0, new ItemStack(Material.WOOD_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+			    chestplate = new ItemStack(Material.IRON_CHESTPLATE);
+			    chestplate.addEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+			    playerInv.setItem(102, chestplate);	
+				playerInv.setItem(2, potS);
+				playerInv.setItem(3, potH);
 				break;
 			case 6:
-				inv.setItem(2, potS);
-				inv.setItem(3, potH);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				playerInv.setItem(0, new ItemStack(Material.STONE_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+			    chestplate = new ItemStack(Material.IRON_CHESTPLATE);
+			    chestplate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+			    playerInv.setItem(102, chestplate);	
+				playerInv.setItem(2, potS);
+				playerInv.setItem(3, potH);
 				break;
 			case 7:
-				inv.setItem(2, potS2);
-				inv.setItem(3, potH);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				playerInv.setItem(0, new ItemStack(Material.STONE_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+			    chestplate = new ItemStack(Material.IRON_CHESTPLATE);
+			    chestplate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+			    playerInv.setItem(102, chestplate);	
+				playerInv.setItem(2, potS2);
+				playerInv.setItem(3, potH);
 				break;
 			case 8:
-				inv.setItem(2, potS2);
-				inv.setItem(3, potH2);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				playerInv.setItem(0, new ItemStack(Material.STONE_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+			    chestplate = new ItemStack(Material.IRON_CHESTPLATE);
+			    chestplate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+			    playerInv.setItem(102, chestplate);	
+				playerInv.setItem(2, potS2);
+				playerInv.setItem(3, potH2);
 				break;
 			case 9:
-				inv.setItem(2, potS2);
-				inv.setItem(3, potH2);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				playerInv.setItem(0, new ItemStack(Material.STONE_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+			    chestplate = new ItemStack(Material.DIAMOND_CHESTPLATE);
+			    chestplate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+			    playerInv.setItem(102, chestplate);	
+				playerInv.setItem(2, potS2);
+				playerInv.setItem(3, potH2);
 				break;
 			default:
 				break;
@@ -378,86 +261,81 @@ public enum Class implements Upgradable {
 
 		} else if (this == SKELETON) {
 
-			inv.setItem(0, new ItemStack(Material.STONE_SWORD, 1));
-			inv.setItem(1, new ItemStack(Material.IRON_PICKAXE, 1));
+			playerInv.setItem(1, new ItemStack(Material.STONE_PICKAXE));
+				
 			switch (kitLevel) {
 			case 1:
-				inv.setItem(2, new ItemStack(Material.BOW, 1));
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 32));
-				inv.setItem(7, new ItemStack(Material.ARROW, 32));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 4));
+				playerInv.setItem(0, new ItemStack(Material.BOW, 1));
+				playerInv.setItem(6, new ItemStack(Material.ARROW, 30));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 2));
 				break;
 			case 2:
-				inv.setItem(2, new ItemStack(Material.BOW, 1));
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 48));
-				inv.setItem(7, new ItemStack(Material.ARROW, 48));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 8));
+				playerInv.setItem(0, new ItemStack(Material.BOW, 1));
+				playerInv.setItem(6, new ItemStack(Material.ARROW, 35));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 2));
 				break;
 			case 3:
-				inv.setItem(2, new ItemStack(Material.BOW, 1));
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(7, new ItemStack(Material.ARROW, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				playerInv.setItem(0, new ItemStack(Material.BOW, 1));
+				playerInv.setItem(6, new ItemStack(Material.ARROW, 40));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 2));
 				break;
 			case 4:
-				inv.setItem(2, new ItemStack(Material.BOW, 1));
-				inv.setItem(4, potH);
-				inv.setItem(5, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(7, new ItemStack(Material.ARROW, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				playerInv.setItem(0, new ItemStack(Material.BOW, 1));
+				playerInv.setItem(6, new ItemStack(Material.ARROW, 45));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH);
 				break;
 			case 5:
-				inv.setItem(0, new ItemStack(Material.IRON_SWORD, 1));
-				inv.setItem(2, new ItemStack(Material.BOW, 1));
-				inv.setItem(3, potS);
-				inv.setItem(4, potH);
-				inv.setItem(5, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(7, new ItemStack(Material.ARROW, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				playerInv.setItem(0, new ItemStack(Material.BOW, 1));
+				playerInv.setItem(6, new ItemStack(Material.ARROW, 50));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH);
+				playerInv.setItem(2, potS);
 				break;
 			case 6:
-				inv.setItem(0, new ItemStack(Material.IRON_SWORD, 1));
 				bow = new ItemStack(Material.BOW);
 				bow.addEnchantment(Enchantment.ARROW_DAMAGE, 1);
-				inv.setItem(2, bow);
-				inv.setItem(3, potS2);
-				inv.setItem(4, potH);
-				inv.setItem(5, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(7, new ItemStack(Material.ARROW, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				playerInv.setItem(0, bow);
+				playerInv.setItem(6, new ItemStack(Material.ARROW, 55));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH);
+				playerInv.setItem(2, potS2);
 				break;
 			case 7:
-				inv.setItem(0, new ItemStack(Material.IRON_SWORD, 1));
 				bow = new ItemStack(Material.BOW);
 				bow.addEnchantment(Enchantment.ARROW_DAMAGE, 1);
-				inv.setItem(2, bow);
-				inv.setItem(3, potS2);
-				inv.setItem(4, potH);
-				inv.setItem(5, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(7, new ItemStack(Material.ARROW, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				helmet = new ItemStack(Material.IRON_HELMET);
+				helmet.addEnchantment(Enchantment.PROTECTION_PROJECTILE, 2);
+				playerInv.setItem(103, helmet);
+				playerInv.setItem(0, bow);
+				playerInv.setItem(6, new ItemStack(Material.ARROW, 60));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH);
+				playerInv.setItem(2, potS2);
 				break;
 			case 8:
-				inv.setItem(0, new ItemStack(Material.IRON_SWORD, 1));
 				bow = new ItemStack(Material.BOW);
 				bow.addEnchantment(Enchantment.ARROW_DAMAGE, 1);
-				inv.setItem(2, bow);
-				inv.setItem(3, potS2);
-				inv.setItem(4, potH2);
-				inv.setItem(5, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(7, new ItemStack(Material.ARROW, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				helmet = new ItemStack(Material.IRON_HELMET);
+				helmet.addEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
+				playerInv.setItem(103, helmet);
+				playerInv.setItem(0, bow);
+				playerInv.setItem(6, new ItemStack(Material.ARROW, 64));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH2);
+				playerInv.setItem(2, potS2);
 				break;
 			case 9:
-				inv.setItem(0, new ItemStack(Material.IRON_SWORD, 1));
 				bow = new ItemStack(Material.BOW);
 				bow.addEnchantment(Enchantment.ARROW_DAMAGE, 2);
-				inv.setItem(2, bow);
-				inv.setItem(3, potS2);
-				inv.setItem(4, potH2);
-				inv.setItem(5, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(7, new ItemStack(Material.ARROW, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				helmet = new ItemStack(Material.DIAMOND_HELMET);
+				helmet.addEnchantment(Enchantment.PROTECTION_PROJECTILE, 4);
+				playerInv.setItem(103, helmet);
+				playerInv.setItem(0, bow);
+				playerInv.setItem(6, new ItemStack(Material.ARROW, 64));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH2);
+				playerInv.setItem(2, potS2);
 				break;
 			default:
 				break;
@@ -465,58 +343,82 @@ public enum Class implements Upgradable {
 
 		} else if (this == HEROBRINE) {
 
-			inv.setItem(1, new ItemStack(Material.IRON_PICKAXE, 1));
-			inv.setItem(0, new ItemStack(Material.IRON_SWORD, 1));
+			playerInv.setItem(1, new ItemStack(Material.STONE_PICKAXE));
+			
 			switch (kitLevel) {
 			case 1:
+				playerInv.setItem(0, new ItemStack(Material.STONE_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 2));
 				break;
 			case 2:
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 48));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 8));
+				playerInv.setItem(0, new ItemStack(Material.STONE_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 2));
+				playerInv.setItem(103, new ItemStack(Material.CHAINMAIL_HELMET));
 				break;
 			case 3:
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				helmet = new ItemStack(Material.CHAINMAIL_HELMET);
+				helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+				playerInv.setItem(103, helmet);
+				playerInv.setItem(0, new ItemStack(Material.STONE_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 2));
 				break;
 			case 4:
-				inv.setItem(3, potH);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				helmet = new ItemStack(Material.CHAINMAIL_HELMET);
+				helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+				playerInv.setItem(103, helmet);
+				playerInv.setItem(0, new ItemStack(Material.STONE_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH);
 				break;
 			case 5:
-				inv.setItem(2, potS);
-				inv.setItem(3, potH);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				helmet = new ItemStack(Material.CHAINMAIL_HELMET);
+				helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+				playerInv.setItem(103, helmet);
+				playerInv.setItem(0, new ItemStack(Material.IRON_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH);
 				break;
 			case 6:
-				inv.setItem(2, potS);
-				inv.setItem(3, potH2);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				helmet = new ItemStack(Material.CHAINMAIL_HELMET);
+				helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+				playerInv.setItem(103, helmet);
+				playerInv.setItem(0, new ItemStack(Material.IRON_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH);
+				playerInv.setItem(2, potS);
 				break;
 			case 7:
-				inv.setItem(0, new ItemStack(Material.IRON_SWORD, 1));
-				inv.setItem(2, potS);
-				inv.setItem(3, potH2);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				helmet = new ItemStack(Material.IRON_HELMET);
+				helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+				playerInv.setItem(103, helmet);
+				playerInv.setItem(0, new ItemStack(Material.IRON_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH2);
+				playerInv.setItem(2, potS);
 				break;
 			case 8:
-				inv.setItem(0, new ItemStack(Material.DIAMOND_SWORD, 1));
-				inv.setItem(2, potS2);
-				inv.setItem(3, potH2);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				helmet = new ItemStack(Material.IRON_HELMET);
+				helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+				sword = new ItemStack(Material.STONE_SWORD);
+				sword.addEnchantment(Enchantment.DAMAGE_ALL, 1);
+				sword.addEnchantment(Enchantment.DURABILITY, 5);
+				playerInv.setItem(103, helmet);
+				playerInv.setItem(0, sword);
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH2);
+				playerInv.setItem(2, potS2);
 				break;
 			case 9:
-				ItemStack ironSword = new ItemStack(Material.IRON_SWORD);
-				ironSword.addEnchantment(Enchantment.DAMAGE_ALL, 1);
-				inv.setItem(0, ironSword);
-				inv.setItem(2, potS2);
-				inv.setItem(3, potH2);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				helmet = new ItemStack(Material.IRON_HELMET);
+				helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+				sword = new ItemStack(Material.IRON_SWORD);
+				sword.addEnchantment(Enchantment.DAMAGE_ALL, 1);
+				sword.addEnchantment(Enchantment.DURABILITY, 5);
+				playerInv.setItem(103, helmet);
+				playerInv.setItem(0, sword);
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH2);
+				playerInv.setItem(2, potS2);
 				break;
 			default:
 				break;
@@ -524,53 +426,83 @@ public enum Class implements Upgradable {
 			
 		} else if (this == CREEPER) {
 
-			inv.setItem(0, new ItemStack(Material.IRON_SWORD, 1));
-			inv.setItem(1, new ItemStack(Material.IRON_PICKAXE, 1));
+			playerInv.setItem(1, new ItemStack(Material.STONE_PICKAXE));
+			
 			switch (kitLevel) {
 			case 1:
+				leggings = new ItemStack(Material.CHAINMAIL_LEGGINGS);
+				leggings.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 1);
+				playerInv.setItem(101, leggings);
+				playerInv.setItem(0, new ItemStack(Material.WOOD_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 2));
 				break;
 			case 2:
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 48));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 8));
+				leggings = new ItemStack(Material.CHAINMAIL_LEGGINGS);
+				leggings.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 2);
+				playerInv.setItem(101, leggings);
+				playerInv.setItem(0, new ItemStack(Material.WOOD_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 2));
 				break;
 			case 3:
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				leggings = new ItemStack(Material.IRON_LEGGINGS);
+				leggings.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 2);
+				playerInv.setItem(101, leggings);
+				playerInv.setItem(0, new ItemStack(Material.WOOD_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 2));
 				break;
 			case 4:
-				inv.setItem(3, potH);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				leggings = new ItemStack(Material.IRON_LEGGINGS);
+				leggings.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 2);
+				playerInv.setItem(101, leggings);
+				playerInv.setItem(0, new ItemStack(Material.WOOD_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH);
 				break;
 			case 5:
-				inv.setItem(2, potS);
-				inv.setItem(3, potH);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				leggings = new ItemStack(Material.IRON_LEGGINGS);
+				leggings.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 2);
+				playerInv.setItem(101, leggings);
+				playerInv.setItem(0, new ItemStack(Material.STONE_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH);
+				playerInv.setItem(2, potS);
 				break;
 			case 6:
-				inv.setItem(2, potS);
-				inv.setItem(3, potH);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				leggings = new ItemStack(Material.IRON_LEGGINGS);
+				leggings.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 3);
+				playerInv.setItem(101, leggings);
+				playerInv.setItem(0, new ItemStack(Material.STONE_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH);
+				playerInv.setItem(2, potS2);
 				break;
 			case 7:
-				inv.setItem(2, potS);
-				inv.setItem(3, potH2);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				leggings = new ItemStack(Material.IRON_LEGGINGS);
+				leggings.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 4);
+				playerInv.setItem(101, leggings);
+				playerInv.setItem(0, new ItemStack(Material.IRON_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH);
+				playerInv.setItem(2, potS2);
 				break;
 			case 8:
-				inv.setItem(2, potS2);
-				inv.setItem(3, potH2);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				leggings = new ItemStack(Material.IRON_LEGGINGS);
+				leggings.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 4);
+				playerInv.setItem(101, leggings);
+				playerInv.setItem(0, new ItemStack(Material.IRON_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH2);
+				playerInv.setItem(2, potS2);
 				break;
 			case 9:
-				inv.setItem(2, potS2);
-				inv.setItem(3, potH2);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				leggings = new ItemStack(Material.DIAMOND_LEGGINGS);
+				leggings.addEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 4);
+				leggings.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+				playerInv.setItem(101, leggings);
+				playerInv.setItem(0, new ItemStack(Material.IRON_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH2);
+				playerInv.setItem(2, potS2);
 				break;
 			default:
 				break;
@@ -578,55 +510,71 @@ public enum Class implements Upgradable {
 
 		} else if (this == SPIRIT_WARRIOR) {
 
-			inv.setItem(0, new ItemStack(Material.IRON_SWORD, 1));
-			inv.setItem(1, new ItemStack(Material.IRON_PICKAXE, 1));
+			playerInv.setItem(1, new ItemStack(Material.STONE_SWORD));
+			
 			switch (kitLevel) {
 			case 1:
+				playerInv.setItem(0, new ItemStack(Material.WOOD_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 2));
 				break;
 			case 2:
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 48));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 8));
+				playerInv.setItem(0, new ItemStack(Material.STONE_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 2));
 				break;
 			case 3:
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				playerInv.setItem(0, new ItemStack(Material.IRON_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 2));
 				break;
 			case 4:
-				inv.setItem(3, potH);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				playerInv.setItem(0, new ItemStack(Material.IRON_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH);
 				break;
 			case 5:
-				inv.setItem(2, potS);
-				inv.setItem(3, potH);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				playerInv.setItem(0, new ItemStack(Material.IRON_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH);
+				playerInv.setItem(2, potS);
 				break;
 			case 6:
-				inv.setItem(2, potS);
-				inv.setItem(3, potH);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				boots = new ItemStack(Material.IRON_BOOTS);
+				boots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+				boots.addEnchantment(Enchantment.PROTECTION_FALL, 1);
+				playerInv.setItem(100, boots);
+				playerInv.setItem(0, new ItemStack(Material.IRON_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH);
+				playerInv.setItem(2, potS2);
 				break;
 			case 7:
-				inv.setItem(2, potS2);
-				inv.setItem(3, potH);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				boots = new ItemStack(Material.DIAMOND_BOOTS);
+				boots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+				boots.addEnchantment(Enchantment.PROTECTION_FALL, 1);
+				playerInv.setItem(100, boots);
+				playerInv.setItem(0, new ItemStack(Material.IRON_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH);
+				playerInv.setItem(2, potS2);
 				break;
 			case 8:
-				inv.setItem(0, new ItemStack(Material.DIAMOND_SWORD, 1));
-				inv.setItem(2, potS2);
-				inv.setItem(3, potH);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				boots = new ItemStack(Material.DIAMOND_BOOTS);
+				boots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+				boots.addEnchantment(Enchantment.PROTECTION_FALL, 2);
+				playerInv.setItem(100, boots);
+				playerInv.setItem(0, new ItemStack(Material.IRON_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH2);
+				playerInv.setItem(2, potS2);
 				break;
 			case 9:
-				inv.setItem(0, new ItemStack(Material.DIAMOND_SWORD, 1));
-				inv.setItem(2, potS2);
-				inv.setItem(3, potH2);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				boots = new ItemStack(Material.DIAMOND_BOOTS);
+				boots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+				boots.addEnchantment(Enchantment.PROTECTION_FALL, 2);
+				playerInv.setItem(100, boots);
+				playerInv.setItem(0, new ItemStack(Material.DIAMOND_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH2);
+				playerInv.setItem(2, potS2);
 				break;
 			default:
 				break;
@@ -634,55 +582,58 @@ public enum Class implements Upgradable {
 
 		} else if (this == WITHER_MINION) {
 
-			inv.setItem(0, new ItemStack(Material.IRON_SWORD, 1));
-			inv.setItem(1, new ItemStack(Material.IRON_PICKAXE, 1));
+			playerInv.setItem(0, new ItemStack(Material.STONE_PICKAXE));
+
 			switch (kitLevel) {
 			case 1:
+				playerInv.setItem(0, new ItemStack(Material.WOOD_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 2));
 				break;
 			case 2:
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 48));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 8));
+				playerInv.setItem(0, new ItemStack(Material.STONE_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 2));
 				break;
 			case 3:
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				playerInv.setItem(0, new ItemStack(Material.IRON_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 2));
 				break;
 			case 4:
-				inv.setItem(3, potH);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				playerInv.setItem(0, new ItemStack(Material.IRON_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH);
 				break;
 			case 5:
-				inv.setItem(2, potS);
-				inv.setItem(3, potH);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				playerInv.setItem(0, new ItemStack(Material.IRON_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH);
+				playerInv.setItem(2, potS);
 				break;
 			case 6:
-				inv.setItem(2, potS);
-				inv.setItem(3, potH);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				playerInv.setItem(0, new ItemStack(Material.IRON_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH);
+				playerInv.setItem(2, potS2);
 				break;
 			case 7:
-				inv.setItem(2, potS2);
-				inv.setItem(3, potH);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				playerInv.setItem(0, new ItemStack(Material.DIAMOND_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH);
+				playerInv.setItem(2, potS2);
 				break;
 			case 8:
-				inv.setItem(0, new ItemStack(Material.DIAMOND_SWORD, 1));
-				inv.setItem(2, potS2);
-				inv.setItem(3, potH);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				playerInv.setItem(0, new ItemStack(Material.DIAMOND_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH2);
+				playerInv.setItem(2, potS3);
 				break;
 			case 9:
-				inv.setItem(0, new ItemStack(Material.DIAMOND_SWORD, 1));
-				inv.setItem(2, potS2);
-				inv.setItem(3, potH2);
-				inv.setItem(4, new ItemStack(Material.COBBLESTONE, 64));
-				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 16));
+				helmet = new ItemStack(Material.DIAMOND_HELMET);
+				helmet.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+				playerInv.setItem(103, helmet);
+				playerInv.setItem(0, new ItemStack(Material.DIAMOND_SWORD));
+				playerInv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+				playerInv.setItem(3, potH2);
+				playerInv.setItem(2, potS3);
 				break;
 			default:
 				break;
@@ -693,9 +644,8 @@ public enum Class implements Upgradable {
 			Inventory loadedInv = MegaTWBase.getInstance().getDataSource().loadLayout(player, this);
 		
 			if (loadedInv != null)
-				inv = loadedInv;
+				playerInv.setContents(loadedInv.getContents());
 		}
 			
-		return inv;
 	}
 }
