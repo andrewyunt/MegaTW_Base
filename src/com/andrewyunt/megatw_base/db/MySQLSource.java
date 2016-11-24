@@ -417,17 +417,4 @@ public class MySQLSource extends DataSource {
 			MegaTWBase.getInstance().getLogger().severe( "An error occured while creating the Upgrades table.");
 		}
 	}
-	
-	@Override
-	public void cleanupLayouts() {
-		
-		String version = MegaTWBase.getInstance().getDescription().getVersion();
-		String query = "DELETE * from `Layouts` where NOT (`version` = '" + version + "');";
-		
-	    try {
-			statement.execute(query);
-		} catch (SQLException e) {
-			MegaTWBase.getInstance().getLogger().severe( "An error occured while cleaning the Layouts table.");
-		}
-	}
 }

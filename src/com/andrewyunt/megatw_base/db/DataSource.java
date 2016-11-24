@@ -54,8 +54,6 @@ public abstract class DataSource {
 		createLayoutsTable();
 		createUpgradesTable();
 		createKillsTable();
-		
-		cleanupLayouts();
 	}
 	
 	public abstract void createPlayersTable();
@@ -65,6 +63,4 @@ public abstract class DataSource {
 	public abstract void createUpgradesTable();
 	
 	public abstract void createKillsTable();
-	
-	public abstract void cleanupLayouts();
 }
