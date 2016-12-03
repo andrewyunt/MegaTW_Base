@@ -42,11 +42,14 @@ public abstract class DataSource {
 	
 	public abstract int getLevel(GamePlayer player, Upgradable upgradable);
 	
-	public abstract void setKills(GamePlayer player, boolean weekly, Class classType, int count);
+	public abstract void setKills(GamePlayer player, boolean weekly, boolean finalKill,
+			Class classType, int count);
 	
-	public abstract int getKills(GamePlayer player, boolean weekly, Class classType);
+	public abstract int getKills(GamePlayer player, boolean weekly, boolean finalKill, 
+			Class classType);
 	
-	public abstract Map<Integer, Map.Entry<OfflinePlayer, Integer>> getMostKills();
+	public abstract Map<Integer, Map.Entry<OfflinePlayer, Integer>> getMostKills(boolean weekly,
+			boolean finalKill, Class classType);
 	
 	public void updateDB() {
 		

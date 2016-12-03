@@ -32,7 +32,7 @@ public abstract class GamePlayer {
 	
 	protected Class classType;
 	protected DynamicScoreboard dynamicScoreboard = null;
-	protected int coins = 0, earnedCoins = 0, kills = 0;
+	protected int coins = 0, earnedCoins = 0, kills = 0, wins = 0;
 	protected boolean loaded = false, hasBloodEffect = false;
 	protected Map<Upgradable, Integer> upgradeLevels = new HashMap<Upgradable, Integer>();
 	
@@ -125,6 +125,16 @@ public abstract class GamePlayer {
 	public int getKills() {
 		
 		return kills;
+	}
+	
+	public void setWins(int wins) {
+		
+		this.wins = wins;
+	}
+	
+	public int getWins() {
+		
+		return wins;
 	}
 	
 	public void setLoaded(boolean loaded) {

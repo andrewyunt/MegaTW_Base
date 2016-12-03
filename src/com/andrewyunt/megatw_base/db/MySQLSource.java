@@ -33,6 +33,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import com.andrewyunt.megatw_base.MegaTWBase;
+import com.andrewyunt.megatw_base.objects.Class;
 import com.andrewyunt.megatw_base.objects.GamePlayer;
 import com.andrewyunt.megatw_base.objects.Upgradable;
 import com.andrewyunt.megatw_base.utilities.BukkitSerialization;
@@ -60,7 +61,7 @@ public class MySQLSource extends DataSource {
 			    return true;
 			
 			synchronized (this) {
-				Class.forName("com.mysql.jdbc.Driver");
+				java.lang.Class.forName("com.mysql.jdbc.Driver");
 				connection = DriverManager.getConnection("jdbc:mysql://" + ip + ":" + port + "/" + database, user, pass);
 			}
 		} catch (SQLException | ClassNotFoundException e) {
@@ -123,14 +124,15 @@ public class MySQLSource extends DataSource {
     	
 		try {
 			statement.executeUpdate(String.format(
-					"INSERT INTO `Players` (`uuid`, `class`, `blood_particles`, `coins`, `earned_coins`)"
+					"INSERT INTO `Players` (`uuid`, `class`, `blood_particles`, `coins`, `earned_coins`, `wins`)"
 			+ " VALUES ('%s', '%s', %s, %s, %s) ON DUPLICATE KEY UPDATE class = '%2$s',"
-			+ " blood_particles = %3$s, coins = %4$s, earned_coins = %5$s;",
+			+ " blood_particles = %3$s, coins = %4$s, earned_coins = %5$s, wins = %6$s;",
 			uuid,
 			classType == null ? "none" : classType.toString(),
 			player.hasBloodEffect() ? 1 : 0,
 			player.getCoins(),
 			player.getEarnedCoins()));
+			player.getWins();
 		} catch (SQLException e) {
 			MegaTWBase.getInstance().getLogger().severe(String.format(
 					"An error occured while saving %s.", player.getName()));
@@ -162,6 +164,7 @@ public class MySQLSource extends DataSource {
 					player.setBloodEffect(resultSet.getInt("blood_particles") == 1);
 					player.setCoins(resultSet.getInt("coins"));
 					player.setEarnedCoins(resultSet.getInt("earned_coins"));
+					player.setWins(resultSet.getInt("wins"));
 				}
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -274,16 +277,17 @@ public class MySQLSource extends DataSource {
 	}
 	
 	@Override
-	public void setKills(GamePlayer player, boolean weekly, com.andrewyunt.megatw_base.objects.Class classType, int count) {
+	public void setKills(GamePlayer player, boolean weekly, boolean finalKill, com.andrewyunt.megatw_base.objects.Class classType, int count) {
 		
 		String uuid = MegaTWBase.getInstance().getServer().getOfflinePlayer(player.getName()).getUniqueId().toString();
 		
 		try {
 			statement.executeUpdate(String.format(
-					"INSERT INTO `Kills` (`uuid`, `reset_weekly`, `class`, `count`)"
-			+ " VALUES ('%s', %s, '%s', %s) ON DUPLICATE KEY UPDATE `level` = '%3$s';",
+					"INSERT INTO `Kills` (`uuid`, `reset_weekly`, `final`, `class`, `count`)"
+			+ " VALUES ('%s', %s, %s, '%s', %s) ON DUPLICATE KEY UPDATE `level` = '%3$s';",
 			uuid,
 			weekly ? 1 : 0,
+			finalKill ? 1 : 0,
 			classType == null ? "ALL" : classType.toString(),
 			count));
 		} catch (SQLException e) {
@@ -293,7 +297,7 @@ public class MySQLSource extends DataSource {
 	}
 
 	@Override
-	public int getKills(GamePlayer player, boolean weekly, com.andrewyunt.megatw_base.objects.Class classType) {
+	public int getKills(GamePlayer player, boolean weekly, boolean finalKill, com.andrewyunt.megatw_base.objects.Class classType) {
 		
 		String uuid = MegaTWBase.getInstance().getServer().getOfflinePlayer(player.getName()).getUniqueId().toString();
 		
@@ -301,8 +305,9 @@ public class MySQLSource extends DataSource {
 		
 		try {
 			resultSet = statement.executeQuery("SELECT * FROM `Kills` WHERE `uuid` = '" + uuid
-					+ "' AND `reset_weekly` = '" + (weekly ? 1 : 0) + "' AND `class` = '"
-					+ classType == null ? "ALL" : classType.toString() + "';");
+					+ "'" + (weekly ? " AND `reset_weekly` = 1" : "") 
+					+ (finalKill ? " AND `final` = 1" : "")
+					+ " AND `class` = '" + classType == null ? "ALL" : classType.toString() + "';");
 		} catch (SQLException e) {
 			return 1;
 		}
@@ -320,14 +325,18 @@ public class MySQLSource extends DataSource {
 	}
 	
 	@Override
-	public Map<Integer, Map.Entry<OfflinePlayer, Integer>> getMostKills() {
+	public Map<Integer, Map.Entry<OfflinePlayer, Integer>> getMostKills(boolean weekly, boolean finalKill, Class classType) {
 		
 		Map<Integer, Map.Entry<OfflinePlayer, Integer>> mostKills =  new HashMap<Integer, Map.Entry<OfflinePlayer, Integer>>();
 		
 		ResultSet resultSet = null;
 		
 		try {
-			resultSet = statement.executeQuery("SELECT `uuid`, `kills` FROM `Players` ORDER BY `kills` DESC LIMIT 5;");
+			resultSet = statement.executeQuery("SELECT `uuid`, `kills` FROM `Players` WHERE"
+					+ " `reset_weekly` = " + String.valueOf(weekly ? 1 : 0)
+					+ " AND `final` = " + String.valueOf(finalKill ? 1 : 0)
+					+ " AND `class` = '" + classType == null ? "ALL" : classType.toString()
+					+ " ORDER BY `kills` DESC LIMIT 5;");
 		} catch (SQLException e) {
 			return null;
 		}
@@ -357,7 +366,8 @@ public class MySQLSource extends DataSource {
 	            + "   `class`            CHAR(20) NOT NULL,"
 	            + "   `blood_particles`  INT,"
 	            + "   `coins`            INT,"
-	            + "   `earned_coins`     INT);";
+	            + "   `earned_coins`     INT,"
+	            + "   `wins`            INT);";
 	    
 	    try {
 			statement.execute(query);
@@ -407,9 +417,10 @@ public class MySQLSource extends DataSource {
 	    String query = "CREATE TABLE IF NOT EXISTS `Kills`"
 	            + "  (`uuid`             CHAR(36) NOT NULL,"
 	            + "   `reset_weekly`     BOOLEAN NOT NULL,"
+	            + "   `final`            BOOLEAN NOT NULL,"
 	            + "   `class`            CHAR NOT NULL,"
 	            + "   `count`            INT NOT NULL,"
-	            + "   PRIMARY KEY (`uuid`, `reset_weekly`, `class`));";
+	            + "   PRIMARY KEY (`uuid`, `reset_weekly`, `final`, `class`));";
 	    
 	    try {
 			statement.execute(query);
