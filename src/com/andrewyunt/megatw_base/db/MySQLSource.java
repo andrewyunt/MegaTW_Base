@@ -181,20 +181,18 @@ public class MySQLSource extends DataSource {
 	public void saveLayout(GamePlayer player, com.andrewyunt.megatw_base.objects.Class classType, Inventory inv) {
 		
 		String uuid = MegaTWBase.getInstance().getServer().getOfflinePlayer(player.getName()).getUniqueId().toString();
-		String version = MegaTWBase.getInstance().getDescription().getVersion();
 		
 		BukkitScheduler scheduler = MegaTWBase.getInstance().getServer().getScheduler();
         scheduler.runTaskAsynchronously(MegaTWBase.getInstance(), () -> {
             try {
                 statement.executeUpdate(String.format(
-                        "INSERT INTO `Layouts` (`uuid`, `layout`, `level`, `inventory`, `version`)"
+                        "INSERT INTO `Layouts` (`uuid`, `layout`, `level`, `inventory`)"
                                 + " VALUES ('%s', '%s', %s, '%s', '%s') ON DUPLICATE KEY UPDATE `layout` = '%2$s',"
                                 + "`inventory` = '%4$s';",
                         uuid,
                         classType.toString(),
                         player.getLevel(classType),
-                        BukkitSerialization.toBase64(inv),
-                        version));
+                        BukkitSerialization.toBase64(inv)));
             } catch (SQLException e) {
                 MegaTWBase.getInstance().getLogger().severe(String.format(
                         "An error occured while saving %s.", player.getName()));
@@ -212,8 +210,7 @@ public class MySQLSource extends DataSource {
         
 		try {
 			resultSet = statement.executeQuery("SELECT * FROM `Layouts` WHERE `uuid` = '" + uuid + "' AND"
-					+ " layout = '" + classType.toString() + "' AND `level` = " + player.getLevel(classType)
-					+ " AND `version` = '" + version + "';");
+					+ " layout = '" + classType.toString() + "' AND `level` = " + player.getLevel(classType) + ";");
 		} catch (SQLException e) {
 			return null; // layout doesn't exist
 		}
@@ -284,7 +281,7 @@ public class MySQLSource extends DataSource {
 		try {
 			statement.executeUpdate(String.format(
 					"INSERT INTO `Kills` (`uuid`, `reset_weekly`, `final`, `class`, `count`)"
-			+ " VALUES ('%s', %s, %s, '%s', %s) ON DUPLICATE KEY UPDATE `level` = '%3$s';",
+			+ " VALUES ('%s', %s, %s, '%s', %s) ON DUPLICATE KEY UPDATE `kills` = '%5$s';",
 			uuid,
 			weekly ? 1 : 0,
 			finalKill ? 1 : 0,
@@ -384,7 +381,6 @@ public class MySQLSource extends DataSource {
 	            + "   `layout`           CHAR(20) NOT NULL,"
 	            + "   `level`            INT NOT NULL,"
 	            + "   `inventory`        VARCHAR(8000) NOT NULL,"
-	            + "   `version`          CHAR(10) NOT NULL,"
 	            + "   PRIMARY KEY (`uuid`, `layout`, `level`));";
 
 	    
