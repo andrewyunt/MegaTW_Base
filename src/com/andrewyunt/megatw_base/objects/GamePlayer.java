@@ -89,7 +89,7 @@ public abstract class GamePlayer {
 		
 		setCoins(this.coins + coins);
 		
-		setEarnedCoins(this.earnedCoins + coins);
+		setEarnedCoins(earnedCoins + coins);
 	}
 	
 	public void removeCoins(int coins) {

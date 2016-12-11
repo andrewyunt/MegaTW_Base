@@ -406,7 +406,7 @@ public class MySQLSource extends DataSource {
 				}
 		}
 		
-		return 1;
+		return 0;
 	}
 	
 	@Override
