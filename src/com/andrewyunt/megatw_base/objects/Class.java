@@ -656,7 +656,7 @@ public enum Class implements Upgradable {
 
 		} else if (this == SPIRIT_WARRIOR) {
 
-			inv.setItem(1, new ItemStack(Material.STONE_SWORD));
+			inv.setItem(1, new ItemStack(Material.STONE_PICKAXE));
 			
 			switch (kitLevel) {
 			case 1:
@@ -712,7 +712,7 @@ public enum Class implements Upgradable {
 
 		} else if (this == WITHER_MINION) {
 
-			inv.setItem(0, new ItemStack(Material.STONE_PICKAXE));
+			inv.setItem(1, new ItemStack(Material.STONE_PICKAXE));
 
 			switch (kitLevel) {
 			case 1:
