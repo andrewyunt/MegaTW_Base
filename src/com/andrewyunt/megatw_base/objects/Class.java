@@ -407,6 +407,8 @@ public enum Class implements Upgradable {
 		ItemStack sword;
 		
 		// Add items to inventory
+		inv.setItem(7, new ItemStack(Material.COMPASS, 1));
+		
 		if (this == ZOMBIE) {
 			
 			inv.setItem(1, new ItemStack(Material.STONE_PICKAXE));
