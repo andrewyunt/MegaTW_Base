@@ -134,6 +134,7 @@ public class MySQLSource extends DataSource {
 		} catch (SQLException e) {
 			MegaTWBase.getInstance().getLogger().severe(String.format(
 					"An error occured while saving %s.", player.getName()));
+			e.printStackTrace();
 		} finally {
 			if (preparedStatement != null)
 				try {
@@ -180,6 +181,7 @@ public class MySQLSource extends DataSource {
 			} catch (SQLException e) {
 				MegaTWBase.getInstance().getLogger().severe(String.format(
 						"An error occured while loading %s.", player.getName()));
+				e.printStackTrace();
 			} finally {
 				if (preparedStatement != null)
 					try {
@@ -216,6 +218,7 @@ public class MySQLSource extends DataSource {
 				} catch (SQLException e) {
 					MegaTWBase.getInstance().getLogger().severe(String.format(
 							"An error occured while saving %s's layout.", player.getName()));
+					e.printStackTrace();
 				} finally {
 					if (preparedStatement != null)
 						try {
@@ -257,6 +260,7 @@ public class MySQLSource extends DataSource {
 			MegaTWBase.getInstance().getLogger().severe(String.format(
 					"An error occured while loading %s's %s layout.", player.getName(), 
 					player.getClassType().getName()));
+			e.printStackTrace();
 		} finally {
 			if (preparedStatement != null)
 				try {
@@ -288,6 +292,7 @@ public class MySQLSource extends DataSource {
 		} catch (SQLException e) {
 			MegaTWBase.getInstance().getLogger().severe(String.format(
 					"An error occured while saving %s's upgrade levels.", player.getName()));
+			e.printStackTrace();
 		} finally {
 			if (preparedStatement != null)
 				try {
@@ -324,6 +329,7 @@ public class MySQLSource extends DataSource {
 		} catch (SQLException e) {
 			MegaTWBase.getInstance().getLogger().severe(String.format(
 					"An error occured while loading %s's %s upgradable.", player.getName(), upgradable.getName()));
+			e.printStackTrace();
 		} finally {
 			if (preparedStatement != null)
 				try {
@@ -357,6 +363,7 @@ public class MySQLSource extends DataSource {
 		} catch (SQLException e) {
 			MegaTWBase.getInstance().getLogger().severe(String.format(
 					"An error occured while saving %s's kills.", player.getName()));
+			e.printStackTrace();
 		} finally {
 			if (preparedStatement != null)
 				try {
@@ -374,8 +381,7 @@ public class MySQLSource extends DataSource {
 		
 		ResultSet resultSet = null;
 		
-		String query = "SELECT * FROM `Kills` WHERE `uuid` = ?" 
-				+ (weekly ? " AND `reset_weekly` = 1" : "") 
+		String query = "SELECT * FROM `Kills` WHERE `uuid` = ? AND `reset_weekly` = ?"
 				+ (finalKill ? " AND `final` = 1" : "")
 				+ " AND `class` = ?;";
 		
@@ -383,11 +389,13 @@ public class MySQLSource extends DataSource {
 			preparedStatement = connection.prepareStatement(query);
 			
 			preparedStatement.setString(1, uuid);
-			preparedStatement.setString(2, classType == null ? "ALL" : classType.toString());
+			preparedStatement.setInt(2, weekly ? 1 : 0);
+			preparedStatement.setString(3, classType == null ? "ALL" : classType.toString());
 			
 			resultSet = preparedStatement.executeQuery();
 		} catch (SQLException e) {
-			return 1;
+			e.printStackTrace();
+			return 0;
 		}
 		
 		try {
@@ -444,6 +452,7 @@ public class MySQLSource extends DataSource {
 			}
 		} catch (SQLException e) {
 			MegaTWBase.getInstance().getLogger().severe("An error occured while getting players with the most kills.");
+			e.printStackTrace();
 		} finally {
 			if (preparedStatement != null)
 				try {
@@ -473,6 +482,7 @@ public class MySQLSource extends DataSource {
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			MegaTWBase.getInstance().getLogger().severe( "An error occured while creating the Players table.");
+			e.printStackTrace();
 		} finally {
 			if (preparedStatement != null)
 				try {
@@ -499,6 +509,7 @@ public class MySQLSource extends DataSource {
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			MegaTWBase.getInstance().getLogger().severe( "An error occured while creating the Layouts table.");
+			e.printStackTrace();
 		} finally {
 			if (preparedStatement != null)
 				try {
@@ -524,6 +535,7 @@ public class MySQLSource extends DataSource {
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			MegaTWBase.getInstance().getLogger().severe( "An error occured while creating the Upgrades table.");
+			e.printStackTrace();
 		} finally {
 			if (preparedStatement != null)
 				try {
@@ -541,7 +553,7 @@ public class MySQLSource extends DataSource {
 				+ "  (`uuid`             CHAR(36) NOT NULL,"
 				+ "   `reset_weekly`     BOOLEAN NOT NULL,"
 				+ "   `final`            BOOLEAN NOT NULL,"
-				+ "   `class`            CHAR NOT NULL,"
+				+ "   `class`            CHAR(25) NOT NULL,"
 				+ "   `count`            INT NOT NULL,"
 				+ "   PRIMARY KEY (`uuid`, `reset_weekly`, `final`, `class`));";
 		
@@ -551,6 +563,7 @@ public class MySQLSource extends DataSource {
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			MegaTWBase.getInstance().getLogger().severe( "An error occured while creating the Upgrades table.");
+			e.printStackTrace();
 		} finally {
 			if (preparedStatement != null)
 				try {
