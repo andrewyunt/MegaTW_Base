@@ -4,3 +4,26 @@ database-port: 3306
 database-name: MegaTW
 database-user: user
 database-pass: password
+
+# Vanilla item names
+item-names:
+  WOOD_SWORD: "Wood Sword"
+  STONE_SWORD: "Stone Sword"
+  IRON_SWORD: "Iron Sword"
+  DIAMOND_SWORD: "Diamond Sword"
+  CHAINMAIL_HELMET: "Chainmail Helmet"
+  IRON_HELMET: "Iron Helmet"
+  DIAMOND_HELMET: "Diamond Helmet"
+  CHAINMAIL_CHESTPLATE: "Chainmail Chestplate"
+  IRON_CHESTPLATE: "Iron Chestplate"
+  DIAMOND_CHESTPLATE: "Diamond Chestplate"
+  CHAINMAIL_LEGGINGS: "Chainmail Leggings"
+  IRON_LEGGINGS: "Iron Leggings"
+  DIAMOND_LEGGINGS: "Diamond Leggings"
+  CHAINMAIL_BOOTS: "Chainmail Boots"
+  IRON_BOOTS: "Iron Boots"
+  DIAMOND_BOOTS: "Diamond Boots"
+  COOKED_BEEF: "Steak"
+  BOW: "Bow"
+  ARROW: "Arrow"
+  STONE_PICKAXE: "Stone Pickaxe"
