@@ -17,6 +17,7 @@ package com.andrewyunt.megatw_base.objects;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import org.bukkit.entity.Player;
 
 import com.andrewyunt.megatw_base.MegaTWBase;
@@ -100,6 +101,8 @@ public abstract class GamePlayer {
 	public void setCoins(int coins) {
 		
 		this.coins = coins;
+		
+		updateDynamicScoreboard();
 	}
 	
 	public int getCoins() {
@@ -120,6 +123,8 @@ public abstract class GamePlayer {
 	public void setKills(int kills) {
 		
 		this.kills = kills;
+		
+		updateDynamicScoreboard();
 	}
 	
 	public int getKills() {
@@ -130,6 +135,8 @@ public abstract class GamePlayer {
 	public void setWins(int wins) {
 		
 		this.wins = wins;
+		
+		updateDynamicScoreboard();
 	}
 	
 	public int getWins() {

@@ -383,14 +383,16 @@ public class MySQLSource extends DataSource {
 		
 		String query = "SELECT * FROM `Kills` WHERE `uuid` = ? AND `reset_weekly` = ?"
 				+ (finalKill ? " AND `final` = 1" : "")
-				+ " AND `class` = ?;";
+				+ (classType != null ? " AND `class` = ?" : "") + ";";
 		
 		try {
 			preparedStatement = connection.prepareStatement(query);
 			
 			preparedStatement.setString(1, uuid);
 			preparedStatement.setInt(2, weekly ? 1 : 0);
-			preparedStatement.setString(3, classType == null ? "ALL" : classType.toString());
+			
+			if (classType != null)
+				preparedStatement.setString(3, classType.toString());
 			
 			resultSet = preparedStatement.executeQuery();
 		} catch (SQLException e) {
