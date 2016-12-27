@@ -1,6 +1,5 @@
 package com.andrewyunt.megatw_base.utilities;
 
-import net.minecraft.server.v1_7_R4.EntityTypes;
 import net.minecraft.server.v1_7_R4.NBTTagCompound;
 import net.minecraft.server.v1_7_R4.NBTTagList;
 
@@ -15,7 +14,6 @@ import org.bukkit.util.Vector;
 
 import org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -31,84 +29,9 @@ import java.util.stream.Collectors;
  * @author md_5
  * @author blablubbabc
  * @author Quackster
- * @author XlordalX
  */
 public class Utils {
-
-	protected static Field mapStringToClassField, mapClassToStringField, mapClassToIdField,
-		mapStringToIdField, mapIdToClassField;
-
-	static {
-		try {
-			mapStringToClassField = EntityTypes.class.getDeclaredField("c");
-			mapClassToStringField = EntityTypes.class.getDeclaredField("d");
-			mapIdToClassField = EntityTypes.class.getDeclaredField("e");
-			mapClassToIdField = EntityTypes.class.getDeclaredField("f");
-			mapStringToIdField = EntityTypes.class.getDeclaredField("g");
-
-			mapStringToClassField.setAccessible(true);
-			mapClassToStringField.setAccessible(true);
-			mapIdToClassField.setAccessible(true);
-			mapClassToIdField.setAccessible(true);
-			mapStringToIdField.setAccessible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
-	/**
-	 * @author Jogy34
-	 *  
-	 * @see {@link https://bukkit.org/threads/tutorial-1-7-creating-a-custom-entity.212849/}
-	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static void addCustomEntity(Class entityClass, String name, int id) {
-		
-		if (mapStringToClassField == null || mapStringToIdField == null 
-				|| mapClassToStringField == null || mapClassToIdField == null)
-			return;
-		else
-			try {
-				Map mapStringToClass = (Map) mapStringToClassField.get(null);
-				Map mapStringToId = (Map) mapStringToIdField.get(null);
-				Map mapClasstoString = (Map) mapClassToStringField.get(null);
-				Map mapClassToId = (Map) mapClassToIdField.get(null);
-				
-				mapStringToClass.put(name, entityClass);
-				mapStringToId.put(name, Integer.valueOf(id));
-				mapClasstoString.put(entityClass, name);
-				mapClassToId.put(entityClass, Integer.valueOf(id));
-				
-				mapStringToClassField.set(null, mapStringToClass);
-				mapStringToIdField.set(null, mapStringToId);
-				mapClassToStringField.set(null, mapClasstoString);
-				mapClassToIdField.set(null, mapClassToId);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-	}
-	
-	/**
-	 * @author XlordalX
-	 */
-	public static Object getPrivateField(String fieldName, @SuppressWarnings("rawtypes") Class clazz, Object object) {
-
-		Field field;
-		Object o = null;
-
-		try {
-			field = clazz.getDeclaredField(fieldName);
-
-			field.setAccessible(true);
-
-			o = field.get(object);
-		} catch (NoSuchFieldException | IllegalAccessException e) {
-			e.printStackTrace();
-		}
-
-		return o;
-	}
-
 	public static Location deserializeLocation(ConfigurationSection section) {
 
 		return new Location(Bukkit.getWorld(section.getString("w")), section.getDouble("x"), section.getDouble("y"),
