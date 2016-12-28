@@ -98,36 +98,44 @@ public class ClassSelectorMenu implements Listener {
 		ItemStack skeleton = new ItemStack(Material.BONE);
 		ItemStack creeper = new ItemStack(Material.TNT);
 		ItemStack herobrine = new ItemStack(Material.ENDER_PEARL);
+		ItemStack ghast = new ItemStack(Material.FIREBALL);
 		ItemStack goBack = new ItemStack(Material.ARROW);
 		
 		ItemMeta zombieMeta = zombie.getItemMeta();
 		ItemMeta skeletonMeta = skeleton.getItemMeta();
 		ItemMeta creeperMeta = creeper.getItemMeta();
 		ItemMeta herobrineMeta = herobrine.getItemMeta();
+		ItemMeta ghastMeta = ghast.getItemMeta();
 		ItemMeta goBackMeta = goBack.getItemMeta();
 		
 		zombieMeta.setDisplayName("Zombie");
 		skeletonMeta.setDisplayName("Skeleton");
 		creeperMeta.setDisplayName("Creeper");
 		herobrineMeta.setDisplayName("Herobrine");
+		ghastMeta.setDisplayName("Ghast");
 		goBackMeta.setDisplayName("Go Back");
 		
 		zombie.setItemMeta(zombieMeta);
 		skeleton.setItemMeta(skeletonMeta);
 		creeper.setItemMeta(creeperMeta);
 		herobrine.setItemMeta(herobrineMeta);
+		ghast.setItemMeta(ghastMeta);
 		goBack.setItemMeta(goBackMeta);
 		
 		for (int i = 0; i < 11; i++)
 			inv.setItem(i, glassPane);
 
-		inv.setItem(11, zombie);
-		inv.setItem(12, skeleton);
-		inv.setItem(13, glassPane);
-		inv.setItem(14, creeper);
+		inv.setItem(9, zombie);
+		inv.setItem(10, glassPane);
+		inv.setItem(11, skeleton);
+		inv.setItem(12, glassPane);
+		inv.setItem(13, creeper);
+		inv.setItem(14, glassPane);
 		inv.setItem(15, herobrine);
+		inv.setItem(16, glassPane);
+		inv.setItem(17, ghast);
 
-		for (int i = 16; i < 22; i++)
+		for (int i = 18; i < 22; i++)
 			inv.setItem(i, glassPane);
 
 		inv.setItem(22, goBack);

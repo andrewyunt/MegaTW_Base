@@ -15,30 +15,8 @@
  */
 package com.andrewyunt.megatw_base.objects;
 
-import static com.andrewyunt.megatw_base.objects.Ability.EXPLODE;
-import static com.andrewyunt.megatw_base.objects.Ability.EXPLOSIVE_ARROW;
-import static com.andrewyunt.megatw_base.objects.Ability.HEAL;
-import static com.andrewyunt.megatw_base.objects.Ability.LIGHTNING;
-import static com.andrewyunt.megatw_base.objects.Ability.TORNADO;
-import static com.andrewyunt.megatw_base.objects.Ability.WITHER_HEADS;
-import static com.andrewyunt.megatw_base.objects.Skill.BOOMERANG;
-import static com.andrewyunt.megatw_base.objects.Skill.FLURRY;
-import static com.andrewyunt.megatw_base.objects.Skill.FORTUNE;
-import static com.andrewyunt.megatw_base.objects.Skill.FURNACE;
-import static com.andrewyunt.megatw_base.objects.Skill.HASTE;
-import static com.andrewyunt.megatw_base.objects.Skill.POWERFUL_WEAKNESS;
-import static com.andrewyunt.megatw_base.objects.Skill.RECHARGE;
-import static com.andrewyunt.megatw_base.objects.Skill.RESIST;
-import static com.andrewyunt.megatw_base.objects.Skill.SALVAGING;
-import static com.andrewyunt.megatw_base.objects.Skill.SOUL_SUCKER;
-import static com.andrewyunt.megatw_base.objects.Skill.SUPPORT;
-import static com.andrewyunt.megatw_base.objects.Skill.SWIFTNESS;
-import static com.andrewyunt.megatw_base.objects.Skill.SWIFT_BACKUP;
-import static com.andrewyunt.megatw_base.objects.Skill.TNT;
-import static com.andrewyunt.megatw_base.objects.Skill.TREASURE_HUNTER;
-import static com.andrewyunt.megatw_base.objects.Skill.UNDEAD;
-import static com.andrewyunt.megatw_base.objects.Skill.WEAKENING_ARROW;
-import static com.andrewyunt.megatw_base.objects.Skill.WEAKENING_SWING;
+import static com.andrewyunt.megatw_base.objects.Ability.*;
+import static com.andrewyunt.megatw_base.objects.Skill.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,9 +45,10 @@ import com.andrewyunt.megatw_base.MegaTWBase;
 public enum Class implements Upgradable {
 	
 	ZOMBIE("Zombie", HEAL, RESIST, SWIFTNESS, HASTE, 4, false),
-	SKELETON("Skeleton", EXPLOSIVE_ARROW, WEAKENING_ARROW, BOOMERANG, FORTUNE, 20, false),
+	SKELETON("Skeleton", EXPLOSIVE_ARROW, WEAKENING_ARROW, BOOMERANG, FORTUNE, 3, false),
 	CREEPER("Creeper", EXPLODE, POWERFUL_WEAKNESS, SUPPORT, TNT, 10, false),
 	HEROBRINE("Herobrine", LIGHTNING, RECHARGE, FLURRY, TREASURE_HUNTER, 10, false),
+	GHAST("Ghast", FIREBALL, RETRIEVAL, EMPOWERED, HEAT_OF_HELL, 4, false),
 	WITHER_MINION("Wither Minion", WITHER_HEADS, SOUL_SUCKER, UNDEAD, FURNACE, 5, true),
 	SPIRIT_WARRIOR("Spirit Warrior", TORNADO, WEAKENING_SWING, SWIFT_BACKUP, SALVAGING, 5, true);
 	
@@ -302,7 +281,20 @@ public enum Class implements Upgradable {
 			default:
 				break;
 			}
-
+		
+		} else if (this == GHAST) {
+			
+			chestplate = new ItemStack(Material.IRON_CHESTPLATE);
+			boots = new ItemStack(Material.IRON_BOOTS);
+			
+			chestplate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 0);
+			
+			if (kitLevel == 8) {
+				boots.addEnchantment(Enchantment.PROTECTION_PROJECTILE, 0);
+			} else if (kitLevel == 9) {
+				boots.addEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
+			}
+			
 		} else if (this == SPIRIT_WARRIOR) {
 			
 			switch (kitLevel) {
@@ -653,7 +645,61 @@ public enum Class implements Upgradable {
 			default:
 				break;
 			}
-
+			
+		} else if (this == GHAST) {
+			
+			inv.setItem(1, new ItemStack(Material.BOW));
+			
+			switch (kitLevel) {
+			case 1:
+				inv.setItem(0, new ItemStack(Material.WOOD_SWORD, 1));
+				inv.setItem(6, new ItemStack(Material.ARROW, 30));
+				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 2));
+			case 2:
+				inv.setItem(0, new ItemStack(Material.WOOD_SWORD, 1));
+				inv.setItem(6, new ItemStack(Material.ARROW, 35));
+				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 2));
+			case 3:
+				inv.setItem(0, new ItemStack(Material.WOOD_SWORD, 1));
+				inv.setItem(6, new ItemStack(Material.ARROW, 40));
+				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 2));
+			case 4:
+				inv.setItem(0, new ItemStack(Material.WOOD_SWORD, 1));
+				inv.setItem(2, potH);
+				inv.setItem(6, new ItemStack(Material.ARROW, 45));
+				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+			case 5:
+				inv.setItem(0, new ItemStack(Material.WOOD_SWORD, 1));
+				inv.setItem(2, potH);
+				inv.setItem(3, potS);
+				inv.setItem(6, new ItemStack(Material.ARROW, 50));
+				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+			case 6:
+				inv.setItem(0, new ItemStack(Material.STONE_SWORD, 1));
+				inv.setItem(2, potH);
+				inv.setItem(3, potS2);
+				inv.setItem(6, new ItemStack(Material.ARROW, 55));
+				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+			case 7:
+				inv.setItem(0, new ItemStack(Material.IRON_SWORD, 1));
+				inv.setItem(2, potH2);
+				inv.setItem(3, potS2);
+				inv.setItem(6, new ItemStack(Material.ARROW, 60));
+				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+			case 8:
+				inv.setItem(0, new ItemStack(Material.IRON_SWORD, 1));
+				inv.setItem(2, potH2);
+				inv.setItem(3, potS2);
+				inv.setItem(6, new ItemStack(Material.ARROW, 64));
+				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+			case 9:
+				inv.setItem(0, new ItemStack(Material.IRON_SWORD, 1));
+				inv.setItem(2, potH2);
+				inv.setItem(3, potS2);
+				inv.setItem(6, new ItemStack(Material.ARROW, 64));
+				inv.setItem(8, new ItemStack(Material.COOKED_BEEF, 3));
+			}
+			
 		} else if (this == SPIRIT_WARRIOR) {
 
 			inv.setItem(1, new ItemStack(Material.STONE_PICKAXE));

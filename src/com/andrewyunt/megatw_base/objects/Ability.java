@@ -26,6 +26,7 @@ public enum Ability implements Upgradable {
 	EXPLOSIVE_ARROW("Explosive Arrow"),
 	LIGHTNING("Lightning"),
 	EXPLODE("Explode"),
+	FIREBALL("Fireball"),
 	TORNADO("Tornado"),
 	WITHER_HEADS("Master's Attack");
 

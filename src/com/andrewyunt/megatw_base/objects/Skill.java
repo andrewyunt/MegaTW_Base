@@ -35,6 +35,8 @@ public enum Skill implements Upgradable {
 	SWIFT_BACKUP("Swift Backup"),
 	SOUL_SUCKER("Soul Sucker"),
 	UNDEAD("Undead"),
+	RETRIEVAL("Retrieval"),
+	EMPOWERED("Empowered"),
 	
 	// Gathering talents
 	HASTE("Haste"),
@@ -42,8 +44,8 @@ public enum Skill implements Upgradable {
 	TNT("TNT"),
 	TREASURE_HUNTER("Treasure Hunter"),
 	FURNACE("Furnace"),
-	SALVAGING("Salvaging");
-
+	SALVAGING("Salvaging"),
+	HEAT_OF_HELL("Heat of Hell");
 	
 	final String name;
 	
